@@ -246,7 +246,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                       Padding(
                                         padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
                                         child: Container(
-                                          width: MediaQuery.of(context).size.width *0.15,
+                                          width: MediaQuery.of(context).size.width * 0.2,
                                           height: 60,
                                           decoration: BoxDecoration(color:FlutterFlowTheme.primaryColor),
                                           child: Align(
@@ -258,13 +258,18 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                                 Text(listViewPartnersRecord.units.toString(), textAlign: TextAlign.end, style: FlutterFlowTheme.title3.override(fontFamily: 'Poppins', color: FlutterFlowTheme.tertiaryColor, fontWeight: FontWeight.w600),),
                                                 Offstage(
                                                     offstage: mainPageUsersRecord.unit.isEmpty,
-                                                    child:Text('${mainPageUsersRecord.unit}', style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: Colors.black, fontSize: 10,),)
-                                                ),
+                                                    child: Text('${mainPageUsersRecord.unit}',
+                                                        style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: Colors.black, fontSize: 10,),
+                                                        maxLines: 2,
+                                                        textAlign: TextAlign.center,
+                                                      ),
+                                                    )
                                               ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
+
 
                                       // Partner Name
                                       Expanded(
