@@ -1,11 +1,9 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class UpdatePartnerWidget extends StatefulWidget {
   UpdatePartnerWidget({
@@ -20,15 +18,8 @@ class UpdatePartnerWidget extends StatefulWidget {
 }
 
 class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
-  TextEditingController nameTextFieldController;
-  TextEditingController unitTextFieldController;
-
-  @override
-  void initState() {
-    super.initState();
-    nameTextFieldController = TextEditingController();
-    unitTextFieldController = TextEditingController();
-  }
+  String nameTextFieldValue;
+  String unitTextFieldValue;
 
   @override
   Widget build(BuildContext context) {
@@ -71,88 +62,67 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
+
+
+                          // Name
                           child: TextFormField(
-                            controller: nameTextFieldController,
+                            controller: TextEditingController.fromValue(
+                              TextEditingValue(
+                                text: updatePartnerPartnersRecord.name,
+                                selection: TextSelection.collapsed(offset:updatePartnerPartnersRecord.name.length,),
+                              ),
+                            ),
                             obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Nom :',
-                              labelStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                              ),
+                            decoration: InputDecoration(labelText: 'Nom :',
+                              labelStyle: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins',),
                               hintText: '[Entrez un nom...]',
-                              hintStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                              ),
+                              hintStyle: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins',),
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
+                                borderSide: BorderSide(color: Color(0x00000000), width: 1,),
+                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0),),
                               ),
                               focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
+                                borderSide: BorderSide(color: Color(0x00000000), width: 1,),
+                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(4.0),topRight: Radius.circular(4.0),),
                               ),
                               filled: true,
                               fillColor: FlutterFlowTheme.tertiaryColor,
                             ),
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
-                            ),
+                            style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins',),
                             maxLines: 1,
+                            onChanged: (value) => nameTextFieldValue = value,
                           ),
                         ),
+
+                        // Units
                         Padding(
                           padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
                           child: TextFormField(
-                            controller: unitTextFieldController,
+                            controller: TextEditingController.fromValue(
+                              TextEditingValue(
+                                text: updatePartnerPartnersRecord.units.toString(),
+                                selection: TextSelection.collapsed(offset:updatePartnerPartnersRecord.units.toString().length,),
+                              ),
+                            ),
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Unités :',
-                              labelStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                              ),
+                              labelStyle: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins',),
                               hintText: '[Entré la quantité...]',
-                              hintStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                              ),
+                              hintStyle: FlutterFlowTheme.bodyText1.override( fontFamily: 'Poppins',),
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
+                                borderSide: BorderSide(color: Color(0x00000000), width: 1,),
+                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(4.0),topRight: Radius.circular(4.0),),),
                               focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
+                                borderSide: BorderSide(color: Color(0x00000000), width: 1,),
+                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(4.0),topRight: Radius.circular(4.0),),
                               ),
                               filled: true,
                               fillColor: FlutterFlowTheme.tertiaryColor,
                             ),
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
-                            ),
+                            style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins',),
                             maxLines: 1,
+                            onChanged: (value) => unitTextFieldValue = value,
                             keyboardType: TextInputType.number,
                           ),
                         ),
@@ -182,6 +152,8 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                             ),
                           ),
                         ),
+
+                        // Cancel Button
                         Padding(
                           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
                           child: FFButtonWidget(
@@ -193,46 +165,33 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                               width: double.infinity,
                               height: 40,
                               color: FlutterFlowTheme.tertiaryColor,
-                              textStyle: FlutterFlowTheme.subtitle2.override(
-                                fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.primaryColor,
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
+                              textStyle: FlutterFlowTheme.subtitle2.override(fontFamily: 'Poppins', color: FlutterFlowTheme.primaryColor,),
+                              borderSide: BorderSide(color: Colors.transparent, width: 1,),
                               borderRadius: 12,
                             ),
                           ),
                         ),
+
+
+                        // Ok Button
                         Padding(
                           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              final partnersUpdateData =
-                                  createPartnersRecordData(
+                              final partnersUpdateData = createPartnersRecordData(
                                 ownerId: currentUserReference,
-                                name: nameTextFieldController.text,
-                                units:
-                                    double.parse(unitTextFieldController.text),
+                                name: nameTextFieldValue,
+                                units: double.tryParse(unitTextFieldValue) ?? 0,
                               );
-                              await updatePartnerPartnersRecord.reference
-                                  .update(partnersUpdateData);
+                              await updatePartnerPartnersRecord.reference.update(partnersUpdateData);
                               Navigator.pop(context);
                             },
                             text: 'Ok',
                             options: FFButtonOptions(
                               width: double.infinity,
-                              height: 40,
-                              color: FlutterFlowTheme.primaryColor,
-                              textStyle: FlutterFlowTheme.subtitle2.override(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
+                              height: 40,color: FlutterFlowTheme.primaryColor,
+                              textStyle: FlutterFlowTheme.subtitle2.override(fontFamily: 'Poppins', color: Colors.white,),
+                              borderSide: BorderSide(color: Colors.transparent, width: 1,),
                               borderRadius: 12,
                             ),
                           ),
@@ -249,3 +208,4 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
     );
   }
 }
+
