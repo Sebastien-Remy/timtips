@@ -38,28 +38,19 @@ class _MainPageWidgetState extends State<MainPageWidget> {
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.primaryColor,
             automaticallyImplyLeading: true,
+
+            // Page Title
+            // ----------
             title: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Text(
-                  'TiM Tips',
-                  style: FlutterFlowTheme.title1.override(
-                    fontFamily: 'Poppins',
-                    color: FlutterFlowTheme.tertiaryColor,
-                  ),
-                ),
-
-                // here
-                Text(
-                  'Partage équitable des pourboires',
-                  style: FlutterFlowTheme.bodyText2.override(
-                    fontFamily: 'Poppins',
-                    color: FlutterFlowTheme.tertiaryColor,
-                    fontSize: 10,
-                  ),
-                )
+                Text('TiM Tips',style: FlutterFlowTheme.title1.override(fontFamily: 'Poppins',color: FlutterFlowTheme.tertiaryColor,),),
+                Text('Partage équitable des pourboires', style: FlutterFlowTheme.bodyText2.override(fontFamily: 'Poppins', color: FlutterFlowTheme.tertiaryColor, fontSize: 10,),)
               ],
             ),
+
+            // Top right menu (Preferences)
+            // -------------------------------
             actions: [
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
@@ -75,22 +66,19 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                       ),
                     );
                   },
-                  icon: Icon(
-                    Icons.keyboard_control,
-                    color: FlutterFlowTheme.tertiaryColor,
-                    size: 30,
-                  ),
+                  icon: Icon(Icons.keyboard_control, color: FlutterFlowTheme.tertiaryColor, size: 30,),
                   iconSize: 30,
                 ),
               )
             ],
+
             centerTitle: true,
             elevation: 4,
           ),
+
+          // Add partner Floating button
+          // ----------------------------
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              print('FloatingActionButton pressed ...');
-            },
             backgroundColor: FlutterFlowTheme.primaryColor,
             elevation: 8,
             child: IconButton(
@@ -103,14 +91,13 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                   builder: (context) => AddPartnerWidget(),
                 );
               },
-              icon: Icon(
-                Icons.add,
-                color: FlutterFlowTheme.tertiaryColor,
-                size: 30,
-              ),
+              icon: Icon(Icons.add, color: FlutterFlowTheme.tertiaryColor, size: 30,),
               iconSize: 30,
             ),
           ),
+
+          // Page Body
+          // ----------
           body: SafeArea(
             child: Stack(
               children: [
@@ -121,94 +108,88 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                     // Header
                     // ---------
                     StreamBuilder<UsersRecord>(
-                      stream: UsersRecord.getDocument(currentUserReference),
-                      builder: (context, snapshot) {
-                        totalTips = mainPageUsersRecord.tipsToShare;
-                        return Align(
-                          alignment: Alignment(0, -1),
-                          child: Padding(
-                            padding: EdgeInsets.fromLTRB(8, 24, 8, 8),
-                            child: InkWell(
-                              onTap: () async {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: FlutterFlowTheme.primaryColor,
-                                  barrierColor: FlutterFlowTheme.tertiaryColor,
-                                  context: context,
-                                  builder: (context) => ChangeTipWidget(),
-                                );
-                              },
-                              child: Container(
-                                width: double.infinity,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(0),
-                                    bottomRight: Radius.circular(0),
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20),
-                                  ),
-                                  shape: BoxShape.rectangle,
-                                  border: Border.all(
-                                    color: FlutterFlowTheme.primaryColor,
-                                    width: 3,
-                                  ),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Align(
-                                        alignment: Alignment(0, 0),
-                                        child: Padding(
-                                          padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                                          child: Text(
-                                            '${NumberFormat.currency(locale: 'fr_FR', symbol: "€").format(totalTips)}',
-                                            style: FlutterFlowTheme.title1.override(
-                                              fontFamily: 'Poppins',
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                        stream: UsersRecord.getDocument(currentUserReference),
+                        builder: (context, snapshot) {
+                          totalTips = mainPageUsersRecord.tipsToShare;
+                          return Align(
+                            alignment: Alignment(0, -1),
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(8, 24, 8, 8),
+                              child: InkWell(
+                                onTap: () async {
+                                  await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: FlutterFlowTheme.primaryColor,
+                                    barrierColor: FlutterFlowTheme.tertiaryColor,
+                                    context: context,
+                                    builder: (context) => ChangeTipWidget(),
+                                  );
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(0),
+                                      bottomRight: Radius.circular(0),
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
                                     ),
-                                    Expanded(
-                                      child: Container(
-                                        width: double.infinity,
-                                        height: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.primaryColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: FlutterFlowTheme.primaryColor,
-                                            )
-                                          ],
-                                          borderRadius: BorderRadius.circular(0),
-                                          border: Border.all(
-                                            color: FlutterFlowTheme.primaryColor,
-                                          ),
-                                        ),
+                                    shape: BoxShape.rectangle,
+                                    border: Border.all(
+                                      color: FlutterFlowTheme.primaryColor,
+                                      width: 3,
+                                    ),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+
+                                      // Total Tips
+                                      Expanded(
                                         child: Align(
                                           alignment: Alignment(0, 0),
-                                          child: Text(
-                                            mainPageUsersRecord.unit,
-                                            style:
-                                            FlutterFlowTheme.bodyText1.override(
-                                              fontFamily: 'Poppins',
-                                              color: FlutterFlowTheme.tertiaryColor,
+                                          child: Padding(
+                                            padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                                            child: Text(
+                                              '${NumberFormat.currency(locale: 'fr_FR', symbol: "€").format(totalTips)}',
+                                              style: FlutterFlowTheme.title1.override(
+                                                fontFamily: 'Poppins',
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    )
-                                  ],
+
+                                      // Shared Tips method
+                                      Expanded(
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.primaryColor,
+                                            boxShadow: [BoxShadow(color: FlutterFlowTheme.primaryColor,)],
+                                            borderRadius: BorderRadius.circular(0),
+                                            border: Border.all(color: FlutterFlowTheme.primaryColor,),
+                                          ),
+                                          child: Align(
+                                            alignment: Alignment(0, 0),
+                                            child: Text(
+                                              'A partager en ${mainPageUsersRecord.unit}',
+                                              style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: FlutterFlowTheme.tertiaryColor,),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      }
+                          );
+                        }
                     ),
 
 
@@ -277,10 +258,19 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                           decoration: BoxDecoration(color:FlutterFlowTheme.primaryColor),
                                           child: Align(
                                             alignment: Alignment(0, 0),
-                                            child: Text(
-                                              listViewPartnersRecord.units.toString(),
-                                              textAlign: TextAlign.end,
-                                              style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: FlutterFlowTheme.tertiaryColor,),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Text(
+                                                  listViewPartnersRecord.units.toString(),
+                                                  textAlign: TextAlign.end, style: FlutterFlowTheme.title3.override(fontFamily: 'Poppins', color: FlutterFlowTheme.tertiaryColor, fontWeight: FontWeight.w600),
+                                                ),
+                                                Text(
+                                                    '${mainPageUsersRecord.unit}',
+                                                  style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: Colors.black, fontSize: 10,),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
