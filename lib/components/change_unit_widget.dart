@@ -7,8 +7,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class UpdatePartnerWidget extends StatefulWidget {
-  UpdatePartnerWidget({
+class ChangeUnitWidget extends StatefulWidget {
+  ChangeUnitWidget({
     Key key,
     this.partnerRef,
   }) : super(key: key);
@@ -16,30 +16,28 @@ class UpdatePartnerWidget extends StatefulWidget {
   final DocumentReference partnerRef;
 
   @override
-  _UpdatePartnerWidgetState createState() => _UpdatePartnerWidgetState();
+  _ChangeUnitWidgetState createState() => _ChangeUnitWidgetState();
 }
 
-class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
-  TextEditingController nameTextFieldController;
+class _ChangeUnitWidgetState extends State<ChangeUnitWidget> {
   TextEditingController unitTextFieldController;
 
   @override
   void initState() {
     super.initState();
-    nameTextFieldController = TextEditingController();
     unitTextFieldController = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<PartnersRecord>(
-      stream: PartnersRecord.getDocument(widget.partnerRef),
+    return StreamBuilder<UsersRecord>(
+      stream: UsersRecord.getDocument(currentUserReference),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         }
-        final updatePartnerPartnersRecord = snapshot.data;
+        final changeUnitUsersRecord = snapshot.data;
         return Padding(
           padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
           child: Column(
@@ -62,7 +60,7 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
                           child: Text(
-                            'Modifier',
+                            'Définir unité de travail',
                             style: FlutterFlowTheme.title1.override(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
@@ -72,57 +70,14 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
                           child: TextFormField(
-                            controller: nameTextFieldController,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Nom :',
-                              labelStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                              ),
-                              hintText: '[Entrez un nom...]',
-                              hintStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: FlutterFlowTheme.tertiaryColor,
-                            ),
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
-                            ),
-                            maxLines: 1,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
-                          child: TextFormField(
                             controller: unitTextFieldController,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Unités :',
+                              labelText: 'Unité de travail :',
                               labelStyle: FlutterFlowTheme.bodyText1.override(
                                 fontFamily: 'Poppins',
                               ),
-                              hintText: '[Entré la quantité...]',
+                              hintText: '[Entrez une unité...]',
                               hintStyle: FlutterFlowTheme.bodyText1.override(
                                 fontFamily: 'Poppins',
                               ),
@@ -153,35 +108,9 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                               fontFamily: 'Poppins',
                             ),
                             maxLines: 1,
-                            keyboardType: TextInputType.number,
                           ),
                         ),
                         Spacer(),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(8, 0, 8, 21),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              await updatePartnerPartnersRecord.reference
-                                  .delete();
-                              Navigator.pop(context);
-                            },
-                            text: 'Supprimer',
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 40,
-                              color: Color(0xFFF92525),
-                              textStyle: FlutterFlowTheme.subtitle2.override(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
-                              borderRadius: 12,
-                            ),
-                          ),
-                        ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
                           child: FFButtonWidget(
@@ -209,15 +138,11 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              final partnersUpdateData =
-                                  createPartnersRecordData(
-                                ownerId: currentUserReference,
-                                name: nameTextFieldController.text,
-                                units:
-                                    double.parse(unitTextFieldController.text),
+                              final usersUpdateData = createUsersRecordData(
+                                unit: unitTextFieldController.text,
                               );
-                              await updatePartnerPartnersRecord.reference
-                                  .update(partnersUpdateData);
+                              await changeUnitUsersRecord.reference
+                                  .update(usersUpdateData);
                               Navigator.pop(context);
                             },
                             text: 'Ok',

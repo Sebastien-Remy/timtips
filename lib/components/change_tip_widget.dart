@@ -7,8 +7,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class UpdatePartnerWidget extends StatefulWidget {
-  UpdatePartnerWidget({
+class ChangeTipWidget extends StatefulWidget {
+  ChangeTipWidget({
     Key key,
     this.partnerRef,
   }) : super(key: key);
@@ -16,30 +16,28 @@ class UpdatePartnerWidget extends StatefulWidget {
   final DocumentReference partnerRef;
 
   @override
-  _UpdatePartnerWidgetState createState() => _UpdatePartnerWidgetState();
+  _ChangeTipWidgetState createState() => _ChangeTipWidgetState();
 }
 
-class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
-  TextEditingController nameTextFieldController;
-  TextEditingController unitTextFieldController;
+class _ChangeTipWidgetState extends State<ChangeTipWidget> {
+  TextEditingController tipsToShareTextFieldController;
 
   @override
   void initState() {
     super.initState();
-    nameTextFieldController = TextEditingController();
-    unitTextFieldController = TextEditingController();
+    tipsToShareTextFieldController = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<PartnersRecord>(
-      stream: PartnersRecord.getDocument(widget.partnerRef),
+    return StreamBuilder<UsersRecord>(
+      stream: UsersRecord.getDocument(currentUserReference),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         }
-        final updatePartnerPartnersRecord = snapshot.data;
+        final changeTipUsersRecord = snapshot.data;
         return Padding(
           padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
           child: Column(
@@ -62,7 +60,7 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
                           child: Text(
-                            'Modifier',
+                            'Pourboires à partager',
                             style: FlutterFlowTheme.title1.override(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w500,
@@ -72,53 +70,10 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
                           child: TextFormField(
-                            controller: nameTextFieldController,
+                            controller: tipsToShareTextFieldController,
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Nom :',
-                              labelStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                              ),
-                              hintText: '[Entrez un nom...]',
-                              hintStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: FlutterFlowTheme.tertiaryColor,
-                            ),
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
-                            ),
-                            maxLines: 1,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
-                          child: TextFormField(
-                            controller: unitTextFieldController,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Unités :',
+                              labelText: 'Total à partager :',
                               labelStyle: FlutterFlowTheme.bodyText1.override(
                                 fontFamily: 'Poppins',
                               ),
@@ -158,31 +113,6 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                         ),
                         Spacer(),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(8, 0, 8, 21),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              await updatePartnerPartnersRecord.reference
-                                  .delete();
-                              Navigator.pop(context);
-                            },
-                            text: 'Supprimer',
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 40,
-                              color: Color(0xFFF92525),
-                              textStyle: FlutterFlowTheme.subtitle2.override(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
-                              borderRadius: 12,
-                            ),
-                          ),
-                        ),
-                        Padding(
                           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
                           child: FFButtonWidget(
                             onPressed: () async {
@@ -209,15 +139,12 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              final partnersUpdateData =
-                                  createPartnersRecordData(
-                                ownerId: currentUserReference,
-                                name: nameTextFieldController.text,
-                                units:
-                                    double.parse(unitTextFieldController.text),
+                              final usersUpdateData = createUsersRecordData(
+                                tipsToShare: double.parse(
+                                    tipsToShareTextFieldController.text),
                               );
-                              await updatePartnerPartnersRecord.reference
-                                  .update(partnersUpdateData);
+                              await changeTipUsersRecord.reference
+                                  .update(usersUpdateData);
                               Navigator.pop(context);
                             },
                             text: 'Ok',
