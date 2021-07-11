@@ -223,7 +223,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                         stream: queryPartnersRecord(
                           queryBuilder: (partnersRecord) =>
                               partnersRecord.where('owner_id',
-                                  isEqualTo: mainPageUsersRecord.reference),
+                                  isEqualTo: currentUserReference),
                         ),
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
