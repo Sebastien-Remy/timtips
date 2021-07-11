@@ -30,7 +30,6 @@ dependencies:
   cloud_firestore: ^0.16.0
   firebase_auth: ^0.20.0+1
   firebase_core: ^0.7.0
-  flutter_facebook_auth: ^2.0.2+1
   font_awesome_flutter:
   geolocator:
   google_fonts: ^1.1.2
