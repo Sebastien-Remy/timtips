@@ -79,6 +79,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
           // Add partner Floating button
           // ----------------------------
           floatingActionButton: FloatingActionButton(
+            onPressed: (){},
             backgroundColor: FlutterFlowTheme.primaryColor,
             elevation: 8,
             child: IconButton(
