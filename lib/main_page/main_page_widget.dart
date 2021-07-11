@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/add_partner_widget.dart';
+import '../components/change_tip_widget.dart';
 import '../components/update_partner_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -100,8 +101,17 @@ class _MainPageWidgetState extends State<MainPageWidget> {
             backgroundColor: FlutterFlowTheme.primaryColor,
             elevation: 8,
             child: IconButton(
-              onPressed: () {
-                print('IconButton pressed ...');
+              onPressed: () async {
+                await showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: AddPartnerWidget(),
+                    );
+                  },
+                );
               },
               icon: Icon(
                 Icons.add,
@@ -121,72 +131,89 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                       alignment: Alignment(0, -1),
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(8, 24, 8, 8),
-                        child: Container(
-                          width: double.infinity,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(0),
-                              bottomRight: Radius.circular(0),
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            ),
-                            shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: FlutterFlowTheme.primaryColor,
-                              width: 3,
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Align(
-                                  alignment: Alignment(0, 0),
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                                    child: Text(
-                                      mainPageUsersRecord.tipsToShare
-                                          .toString(),
-                                      style: FlutterFlowTheme.title1.override(
-                                        fontFamily: 'Poppins',
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                        child: InkWell(
+                          onTap: () async {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: FlutterFlowTheme.primaryColor,
+                              barrierColor: FlutterFlowTheme.tertiaryColor,
+                              context: context,
+                              builder: (context) {
+                                return Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.65,
+                                  child: ChangeTipWidget(),
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(0),
+                                bottomRight: Radius.circular(0),
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
                               ),
-                              Expanded(
-                                child: Container(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.primaryColor,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: FlutterFlowTheme.primaryColor,
-                                      )
-                                    ],
-                                    borderRadius: BorderRadius.circular(0),
-                                    border: Border.all(
-                                      color: FlutterFlowTheme.primaryColor,
-                                    ),
-                                  ),
+                              shape: BoxShape.rectangle,
+                              border: Border.all(
+                                color: FlutterFlowTheme.primaryColor,
+                                width: 3,
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
                                   child: Align(
                                     alignment: Alignment(0, 0),
-                                    child: Text(
-                                      mainPageUsersRecord.unit,
-                                      style:
-                                          FlutterFlowTheme.bodyText1.override(
-                                        fontFamily: 'Poppins',
-                                        color: FlutterFlowTheme.tertiaryColor,
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                                      child: Text(
+                                        mainPageUsersRecord.tipsToShare
+                                            .toString(),
+                                        style: FlutterFlowTheme.title1.override(
+                                          fontFamily: 'Poppins',
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              )
-                            ],
+                                Expanded(
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.primaryColor,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: FlutterFlowTheme.primaryColor,
+                                        )
+                                      ],
+                                      borderRadius: BorderRadius.circular(0),
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.primaryColor,
+                                      ),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment(0, 0),
+                                      child: Text(
+                                        mainPageUsersRecord.unit,
+                                        style:
+                                            FlutterFlowTheme.bodyText1.override(
+                                          fontFamily: 'Poppins',
+                                          color: FlutterFlowTheme.tertiaryColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
