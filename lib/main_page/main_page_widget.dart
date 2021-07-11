@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/add_partner_widget.dart';
@@ -8,11 +10,6 @@ import '../user_page/user_page_widget.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-
-extension Ex on double {
-  double toRounded(int n) => double.parse(toStringAsFixed(n));
-}
-
 
 class MainPageWidget extends StatefulWidget {
   MainPageWidget({Key key}) : super(key: key);
@@ -126,6 +123,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
 
+                    // Header
+                    // ---------
                     StreamBuilder<UsersRecord>(
                       stream: UsersRecord.getDocument(currentUserReference),
                       builder: (context, snapshot) {
@@ -177,8 +176,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                         child: Padding(
                                           padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
                                           child: Text(
-                                            mainPageUsersRecord.tipsToShare
-                                                .toString(),
+                                            '${NumberFormat.currency(locale: 'fr_FR', symbol: "€").format(totalTips)}',
                                             style: FlutterFlowTheme.title1.override(
                                               fontFamily: 'Poppins',
                                             ),
@@ -225,55 +223,53 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                     ),
 
 
+                    // Partners
+                    // ------------
                     Expanded(
                       child: StreamBuilder<List<PartnersRecord>>(
-                        stream: queryPartnersRecord(
-                          queryBuilder: (partnersRecord) =>
-                              partnersRecord.where('owner_id',
-                                  isEqualTo: currentUserReference),
-                        ),
+                        stream: queryPartnersRecord(queryBuilder: (partnersRecord) => partnersRecord.where('owner_id', isEqualTo: currentUserReference),),
                         builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
+
+                          // Loading....
                           if (!snapshot.hasData) {
                             return Center(child: CircularProgressIndicator());
                           }
-                          List<PartnersRecord> listViewPartnersRecordList =
-                              snapshot.data;
-                          // Customize what your widget looks like with no query results.
+
+                          List<PartnersRecord> listViewPartnersRecordList = snapshot.data;
+
+                          // No results...
                           if (snapshot.data.isEmpty) {
                             return Container(
                               height: 100,
-                              child: Center(
-                                child: Text('No results.'),
-                              ),
+                              child: Center(child: Text('Pas de résultats.'),),
                             );
                           }
+
+                          // Result in list
                           return ListView.builder(
                             padding: EdgeInsets.zero,
                             scrollDirection: Axis.vertical,
                             itemCount: listViewPartnersRecordList.length,
                             itemBuilder: (context, listViewIndex) {
+
                               totalUnits = listViewPartnersRecordList.fold(0, (acc, e) => acc + e.units);
                               final listViewPartnersRecord = listViewPartnersRecordList[listViewIndex];
-                              final tipsPercentage = (listViewPartnersRecord.units / totalUnits * 100).toRounded(2);
-                              final tipsValue = ( mainPageUsersRecord.tipsToShare * tipsPercentage / 100).toRounded(2);
+                              final tipsPercentage = (listViewPartnersRecord.units / totalUnits);
+                              final tipsValue = ( mainPageUsersRecord.tipsToShare * tipsPercentage);
+
                               return Padding(
                                 padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
+
+                                // On partner item Tapped
+                                // -----------------------
                                 child: InkWell(
                                   onTap: () async {
                                     await showModalBottomSheet(
                                       isScrollControlled: true,
-                                      backgroundColor:
-                                      FlutterFlowTheme.primaryColor,
-                                      barrierColor:
-                                      FlutterFlowTheme.tertiaryColor,
+                                      backgroundColor: FlutterFlowTheme.primaryColor,
+                                      barrierColor:FlutterFlowTheme.tertiaryColor,
                                       context: context,
-                                      builder: (context) {
-                                        return UpdatePartnerWidget(
-                                          partnerRef:
-                                          listViewPartnersRecord.reference,
-                                        );
-                                      },
+                                      builder: (context) => UpdatePartnerWidget(partnerRef: listViewPartnersRecord.reference),
                                     );
                                   },
                                   child: Row(
@@ -282,108 +278,75 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                     MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
+
+                                      // Partner units
                                       Padding(
-                                        padding:
-                                        EdgeInsets.fromLTRB(8, 0, 0, 0),
+                                        padding: EdgeInsets.fromLTRB(8, 0, 0, 0),
                                         child: Container(
-                                          width: MediaQuery.of(context)
-                                              .size
-                                              .width *
-                                              0.15,
+                                          width: MediaQuery.of(context).size.width *0.15,
                                           height: 60,
-                                          decoration: BoxDecoration(
-                                            color:
-                                            FlutterFlowTheme.primaryColor,
-                                          ),
+                                          decoration: BoxDecoration(color:FlutterFlowTheme.primaryColor),
                                           child: Align(
                                             alignment: Alignment(0, 0),
                                             child: Text(
-                                              listViewPartnersRecord.units
-                                                  .toString(),
+                                              listViewPartnersRecord.units.toString(),
                                               textAlign: TextAlign.end,
-                                              style: FlutterFlowTheme.bodyText1
-                                                  .override(
-                                                fontFamily: 'Poppins',
-                                                color: FlutterFlowTheme
-                                                    .tertiaryColor,
-                                              ),
+                                              style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: FlutterFlowTheme.tertiaryColor,),
                                             ),
                                           ),
                                         ),
                                       ),
+
+                                      // Partner Name
                                       Expanded(
                                         child: Align(
                                           alignment: Alignment(0, 0),
                                           child: Padding(
-                                            padding:
-                                            EdgeInsets.fromLTRB(4, 0, 4, 0),
+                                            padding: EdgeInsets.fromLTRB(4, 0, 4, 0),
                                             child: Container(
                                               width: double.infinity,
                                               height: 60,
-                                              decoration: BoxDecoration(
-                                                color: Color(0xFFEEEEEE),
-                                              ),
+                                              decoration: BoxDecoration(color: Color(0xFFEEEEEE)),
                                               child: Align(
                                                 alignment: Alignment(-1, 0),
-                                                child: Text(
-                                                  listViewPartnersRecord.name,
-                                                  style: FlutterFlowTheme
-                                                      .bodyText1
-                                                      .override(
-                                                    fontFamily: 'Poppins',
-                                                  ),
-                                                ),
+                                                child: Text(listViewPartnersRecord.name, style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins',),),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
+
+                                      // Partner Tips and %
                                       Padding(
                                         padding:
                                         EdgeInsets.fromLTRB(0, 0, 8, 0),
                                         child: Container(
-                                          width: MediaQuery.of(context)
-                                              .size
-                                              .width *
-                                              0.3,
+                                          width: MediaQuery.of(context).size.width * 0.3,
                                           height: 60,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFEEEEEE),
-                                          ),
+                                          decoration: BoxDecoration(color: Color(0xFFEEEEEE),),
                                           child: Align(
                                             alignment: Alignment(0, 0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                               children: [
+
+                                                // Partner Tips
                                                 Align(
                                                   alignment: Alignment(0, 0),
                                                   child: Text(
-                                                    '$tipsValue',
-                                                    textAlign: TextAlign.end,
-                                                    style: FlutterFlowTheme
-                                                        .title3
-                                                        .override(
-                                                      fontFamily: 'Poppins',
-                                                      color: FlutterFlowTheme
-                                                          .primaryColor,
-                                                      fontWeight:
-                                                      FontWeight.w600,
-                                                    ),
+                                                    '${NumberFormat.currency(locale: 'fr_FR', symbol: "€").format(tipsValue)}',
+                                                    textAlign: TextAlign.end, style: FlutterFlowTheme.title3.override(fontFamily: 'Poppins', color: FlutterFlowTheme.primaryColor, fontWeight: FontWeight.w600),
                                                   ),
                                                 ),
+
+                                                // Partner Percentage
                                                 Align(
                                                   alignment: Alignment(0, 0),
                                                   child: AutoSizeText(
-                                                    '$tipsPercentage %',
-                                                    style: FlutterFlowTheme
-                                                        .bodyText1
-                                                        .override(
-                                                      fontFamily: 'Poppins',
-                                                      color: Color(0xFF787878),
-                                                      fontSize: 10,
-                                                    ),
+
+                                                    '(${NumberFormat.decimalPercentPattern(locale: 'fr_FR', decimalDigits: 2).format(tipsPercentage)})',
+                                                    style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: Color(0xFF787878), fontSize: 10,),
                                                   ),
                                                 )
                                               ],
