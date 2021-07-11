@@ -100,12 +100,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                   backgroundColor: FlutterFlowTheme.primaryColor,
                   barrierColor: FlutterFlowTheme.tertiaryColor,
                   context: context,
-                  builder: (context) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      child: AddPartnerWidget(),
-                    );
-                  },
+                  builder: (context) => AddPartnerWidget(),
                 );
               },
               icon: Icon(
@@ -140,13 +135,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                   backgroundColor: FlutterFlowTheme.primaryColor,
                                   barrierColor: FlutterFlowTheme.tertiaryColor,
                                   context: context,
-                                  builder: (context) {
-                                    return Container(
-                                      height:
-                                      MediaQuery.of(context).size.height * 0.65,
-                                      child: ChangeTipWidget(),
-                                    );
-                                  },
+                                  builder: (context) => ChangeTipWidget(),
                                 );
                               },
                               child: Container(
