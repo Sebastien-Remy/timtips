@@ -20,24 +20,21 @@ class ChangeTipWidget extends StatefulWidget {
 }
 
 class _ChangeTipWidgetState extends State<ChangeTipWidget> {
-  TextEditingController tipsToShareTextFieldController;
-
-  @override
-  void initState() {
-    super.initState();
-    tipsToShareTextFieldController = TextEditingController();
-  }
+  String tipsToShareTextFieldValue;
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<UsersRecord>(
       stream: UsersRecord.getDocument(currentUserReference),
       builder: (context, snapshot) {
-        // Customize what your widget looks like when it's loading.
+
+        // Waiting fo loading.
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         }
+
         final changeTipUsersRecord = snapshot.data;
+
         return Padding(
           padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
           child: Column(
@@ -57,94 +54,80 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+
+                        // Title
+                        // ------
                         Padding(
                           padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-                          child: Text(
-                            'Pourboires à partager',
-                            style: FlutterFlowTheme.title1.override(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          child: Text( 'Pourboires à partager', style: FlutterFlowTheme.title1.override(fontFamily: 'Poppins', fontWeight: FontWeight.w500,),),
                         ),
+
+                        // Tips to share
+                        // ---------------
                         Padding(
                           padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
                           child: TextFormField(
-                            controller: tipsToShareTextFieldController,
+                            controller: TextEditingController.fromValue(
+                              TextEditingValue(
+                                text: changeTipUsersRecord.tipsToShare.toString(),
+                                selection: TextSelection.collapsed(offset:changeTipUsersRecord.tipsToShare.toString().length,),
+                              ),
+                            ),
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Total à partager :',
-                              labelStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                              ),
-                              hintText: '[Entré la quantité...]',
-                              hintStyle: FlutterFlowTheme.bodyText1.override(
-                                fontFamily: 'Poppins',
-                              ),
+                              labelStyle: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins',),
+                              hintText: '[Entrez le montant total…]',
+                              hintStyle: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins'),
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
+                                borderSide: BorderSide(color: Color(0x00000000), width: 1,),
+                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0),
                                 ),
                               ),
                               focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(4.0),
-                                  topRight: Radius.circular(4.0),
-                                ),
+                                borderSide: BorderSide(color: Color(0x00000000), width: 1),
+                                borderRadius: const BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0)),
                               ),
                               filled: true,
                               fillColor: FlutterFlowTheme.tertiaryColor,
                             ),
-                            style: FlutterFlowTheme.bodyText1.override(
-                              fontFamily: 'Poppins',
-                            ),
+                            style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins',),
                             maxLines: 1,
                             keyboardType: TextInputType.number,
+                            onChanged: (value) => tipsToShareTextFieldValue = value,
                           ),
                         ),
+
                         Spacer(),
+
+                        // Cancel Button
+                        // -------------
                         Padding(
                           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
                           child: FFButtonWidget(
-                            onPressed: () async {
-                              Navigator.pop(context);
-                            },
+                            onPressed: () async {Navigator.pop(context);},
                             text: 'Annuler',
                             options: FFButtonOptions(
                               width: double.infinity,
                               height: 40,
                               color: FlutterFlowTheme.tertiaryColor,
-                              textStyle: FlutterFlowTheme.subtitle2.override(
-                                fontFamily: 'Poppins',
-                                color: FlutterFlowTheme.primaryColor,
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
+                              textStyle: FlutterFlowTheme.subtitle2.override(fontFamily: 'Poppins',color: FlutterFlowTheme.primaryColor,),
+                              borderSide: BorderSide(color: Colors.transparent, width: 1,),
                               borderRadius: 12,
                             ),
                           ),
                         ),
+
+                        // Ok Button
+                        // ----------
                         Padding(
                           padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
                           child: FFButtonWidget(
                             onPressed: () async {
                               final usersUpdateData = createUsersRecordData(
-                                tipsToShare: double.parse(
-                                    tipsToShareTextFieldController.text),
+                                tipsToShare: double.tryParse(tipsToShareTextFieldValue) ?? 0,
                               );
-                              await changeTipUsersRecord.reference
-                                  .update(usersUpdateData);
+                              await changeTipUsersRecord.reference.update(usersUpdateData);
                               Navigator.pop(context);
                             },
                             text: 'Ok',
@@ -152,18 +135,13 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
                               width: double.infinity,
                               height: 40,
                               color: FlutterFlowTheme.primaryColor,
-                              textStyle: FlutterFlowTheme.subtitle2.override(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
+                              textStyle: FlutterFlowTheme.subtitle2.override(fontFamily: 'Poppins',color: Colors.white,),
+                              borderSide: BorderSide(color: Colors.transparent, width: 1,),
                               borderRadius: 12,
                             ),
                           ),
                         )
+
                       ],
                     ),
                   ),
