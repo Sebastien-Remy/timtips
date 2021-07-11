@@ -50,21 +50,18 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+
+                        // Title
+                        // --------
                         Padding(
                           padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-                          child: Text(
-                            'Modifier',
-                            style: FlutterFlowTheme.title1.override(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          child: Text('Modifier',style: FlutterFlowTheme.title1.override(fontFamily: 'Poppins', fontWeight: FontWeight.w500,),),
                         ),
+
+                        // Name
+                        // --------
                         Padding(
                           padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
-
-
-                          // Name
                           child: TextFormField(
                             controller: TextEditingController.fromValue(
                               TextEditingValue(
