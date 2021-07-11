@@ -84,19 +84,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
             elevation: 4,
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              await showModalBottomSheet(
-                isScrollControlled: true,
-                backgroundColor: FlutterFlowTheme.primaryColor,
-                barrierColor: FlutterFlowTheme.tertiaryColor,
-                context: context,
-                builder: (context) {
-                  return Container(
-                    height: MediaQuery.of(context).size.height * 0.65,
-                    child: AddPartnerWidget(),
-                  );
-                },
-              );
+            onPressed: () {
+              print('FloatingActionButton pressed ...');
             },
             backgroundColor: FlutterFlowTheme.primaryColor,
             elevation: 8,
@@ -104,10 +93,12 @@ class _MainPageWidgetState extends State<MainPageWidget> {
               onPressed: () async {
                 await showModalBottomSheet(
                   isScrollControlled: true,
+                  backgroundColor: FlutterFlowTheme.primaryColor,
+                  barrierColor: FlutterFlowTheme.tertiaryColor,
                   context: context,
                   builder: (context) {
                     return Container(
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.5,
                       child: AddPartnerWidget(),
                     );
                   },
