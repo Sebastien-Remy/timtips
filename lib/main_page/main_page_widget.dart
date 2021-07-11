@@ -1,5 +1,8 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../components/add_partner_widget.dart';
+import '../components/change_tip_widget.dart';
+import '../components/update_partner_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../user_page/user_page_widget.dart';
@@ -16,113 +19,125 @@ class MainPageWidget extends StatefulWidget {
 }
 
 class _MainPageWidgetState extends State<MainPageWidget> {
-  TextEditingController partnerTextFieldController;
-  TextEditingController textController2;
-  TextEditingController textController1;
-  final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
-  void initState() {
-    super.initState();
-    partnerTextFieldController = TextEditingController(text: partnersItem);
-    textController2 = TextEditingController();
-    textController1 = TextEditingController();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      autovalidateMode: AutovalidateMode.always,
-      child: StreamBuilder<UsersRecord>(
-        stream: UsersRecord.getDocument(currentUserReference),
-        builder: (context, snapshot) {
-          // Customize what your widget looks like when it's loading.
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          }
-          final mainPageUsersRecord = snapshot.data;
-          return Scaffold(
-            key: scaffoldKey,
-            appBar: AppBar(
-              backgroundColor: FlutterFlowTheme.primaryColor,
-              automaticallyImplyLeading: true,
-              title: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    'TiM Tips',
-                    style: FlutterFlowTheme.title1.override(
-                      fontFamily: 'Poppins',
-                      color: FlutterFlowTheme.tertiaryColor,
-                    ),
+    return StreamBuilder<UsersRecord>(
+      stream: UsersRecord.getDocument(currentUserReference),
+      builder: (context, snapshot) {
+        // Customize what your widget looks like when it's loading.
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
+        final mainPageUsersRecord = snapshot.data;
+        return Scaffold(
+          key: scaffoldKey,
+          appBar: AppBar(
+            backgroundColor: FlutterFlowTheme.primaryColor,
+            automaticallyImplyLeading: true,
+            title: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'TiM Tips',
+                  style: FlutterFlowTheme.title1.override(
+                    fontFamily: 'Poppins',
+                    color: FlutterFlowTheme.tertiaryColor,
                   ),
-                  Text(
-                    'Partage équitable des pourboires',
-                    style: FlutterFlowTheme.bodyText2.override(
-                      fontFamily: 'Poppins',
-                      color: FlutterFlowTheme.tertiaryColor,
-                      fontSize: 10,
-                    ),
-                  )
-                ],
-              ),
-              actions: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                  child: IconButton(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          duration: Duration(milliseconds: 300),
-                          reverseDuration: Duration(milliseconds: 300),
-                          child: UserPageWidget(),
-                        ),
-                      );
-                    },
-                    icon: Icon(
-                      Icons.keyboard_control,
-                      color: FlutterFlowTheme.tertiaryColor,
-                      size: 30,
-                    ),
-                    iconSize: 30,
+                ),
+                Text(
+                  'Partage équitable des pourboires',
+                  style: FlutterFlowTheme.bodyText2.override(
+                    fontFamily: 'Poppins',
+                    color: FlutterFlowTheme.tertiaryColor,
+                    fontSize: 10,
                   ),
                 )
               ],
-              centerTitle: true,
-              elevation: 4,
             ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                print('FloatingActionButton pressed ...');
-              },
-              backgroundColor: FlutterFlowTheme.primaryColor,
-              elevation: 8,
-              child: IconButton(
-                onPressed: () {
-                  print('IconButton pressed ...');
-                },
-                icon: Icon(
-                  Icons.add,
-                  color: FlutterFlowTheme.tertiaryColor,
-                  size: 30,
+            actions: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                child: IconButton(
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        duration: Duration(milliseconds: 300),
+                        reverseDuration: Duration(milliseconds: 300),
+                        child: UserPageWidget(),
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.keyboard_control,
+                    color: FlutterFlowTheme.tertiaryColor,
+                    size: 30,
+                  ),
+                  iconSize: 30,
                 ),
-                iconSize: 30,
+              )
+            ],
+            centerTitle: true,
+            elevation: 4,
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              print('FloatingActionButton pressed ...');
+            },
+            backgroundColor: FlutterFlowTheme.primaryColor,
+            elevation: 8,
+            child: IconButton(
+              onPressed: () async {
+                await showModalBottomSheet(
+                  isScrollControlled: true,
+                  backgroundColor: FlutterFlowTheme.primaryColor,
+                  barrierColor: FlutterFlowTheme.tertiaryColor,
+                  context: context,
+                  builder: (context) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      child: AddPartnerWidget(),
+                    );
+                  },
+                );
+              },
+              icon: Icon(
+                Icons.add,
+                color: FlutterFlowTheme.tertiaryColor,
+                size: 30,
               ),
+              iconSize: 30,
             ),
-            body: SafeArea(
-              child: Stack(
-                children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Align(
-                        alignment: Alignment(0, -1),
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(8, 24, 8, 8),
+          ),
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Align(
+                      alignment: Alignment(0, -1),
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(8, 24, 8, 8),
+                        child: InkWell(
+                          onTap: () async {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: FlutterFlowTheme.primaryColor,
+                              barrierColor: FlutterFlowTheme.tertiaryColor,
+                              context: context,
+                              builder: (context) {
+                                return Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.65,
+                                  child: ChangeTipWidget(),
+                                );
+                              },
+                            );
+                          },
                           child: Container(
                             width: double.infinity,
                             height: 100,
@@ -147,51 +162,15 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                 Expanded(
                                   child: Align(
                                     alignment: Alignment(0, 0),
-                                    child: TextFormField(
-                                      controller: textController1,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        hintText: 'Saisir un montant...',
-                                        hintStyle:
-                                            FlutterFlowTheme.title1.override(
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                                      child: Text(
+                                        mainPageUsersRecord.tipsToShare
+                                            .toString(),
+                                        style: FlutterFlowTheme.title1.override(
                                           fontFamily: 'Poppins',
                                         ),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1,
-                                          ),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(4.0),
-                                            topRight: Radius.circular(4.0),
-                                          ),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1,
-                                          ),
-                                          borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(4.0),
-                                            topRight: Radius.circular(4.0),
-                                          ),
-                                        ),
                                       ),
-                                      style: FlutterFlowTheme.title1.override(
-                                        fontFamily: 'Poppins',
-                                      ),
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      keyboardType: TextInputType.number,
-                                      validator: (val) {
-                                        if (val.isEmpty) {
-                                          return 'Saisie non valide';
-                                        }
-                                        if (val.length < 1) {
-                                          return 'Requires at least 1 characters.';
-                                        }
-                                        return null;
-                                      },
                                     ),
                                   ),
                                 ),
@@ -214,7 +193,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                     child: Align(
                                       alignment: Alignment(0, 0),
                                       child: Text(
-                                        '17${mainPageUsersRecord.unit}',
+                                        mainPageUsersRecord.unit,
                                         style:
                                             FlutterFlowTheme.bodyText1.override(
                                           fontFamily: 'Poppins',
@@ -229,20 +208,56 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: Builder(
-                          builder: (context) {
-                            final partners =
-                                mainPageUsersRecord.partnersName?.toList() ??
-                                    [];
-                            return ListView.builder(
-                              padding: EdgeInsets.zero,
-                              scrollDirection: Axis.vertical,
-                              itemCount: partners.length,
-                              itemBuilder: (context, partnersIndex) {
-                                final partnersItem = partners[partnersIndex];
-                                return Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
+                    ),
+                    Expanded(
+                      child: StreamBuilder<List<PartnersRecord>>(
+                        stream: queryPartnersRecord(
+                          queryBuilder: (partnersRecord) =>
+                              partnersRecord.where('owner_id',
+                                  isEqualTo: currentUserReference),
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                          List<PartnersRecord> listViewPartnersRecordList =
+                              snapshot.data;
+                          // Customize what your widget looks like with no query results.
+                          if (snapshot.data.isEmpty) {
+                            return Container(
+                              height: 100,
+                              child: Center(
+                                child: Text('No results.'),
+                              ),
+                            );
+                          }
+                          return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            scrollDirection: Axis.vertical,
+                            itemCount: listViewPartnersRecordList.length,
+                            itemBuilder: (context, listViewIndex) {
+                              final listViewPartnersRecord =
+                                  listViewPartnersRecordList[listViewIndex];
+                              return Padding(
+                                padding: EdgeInsets.fromLTRB(0, 2, 0, 2),
+                                child: InkWell(
+                                  onTap: () async {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor:
+                                          FlutterFlowTheme.primaryColor,
+                                      barrierColor:
+                                          FlutterFlowTheme.tertiaryColor,
+                                      context: context,
+                                      builder: (context) {
+                                        return UpdatePartnerWidget(
+                                          partnerRef:
+                                              listViewPartnersRecord.reference,
+                                        );
+                                      },
+                                    );
+                                  },
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment:
@@ -264,59 +279,15 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                           ),
                                           child: Align(
                                             alignment: Alignment(0, 0),
-                                            child: Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  2, 0, 2, 0),
-                                              child: TextFormField(
-                                                controller: textController2,
-                                                obscureText: false,
-                                                decoration: InputDecoration(
-                                                  hintText: 'Unités',
-                                                  hintStyle: FlutterFlowTheme
-                                                      .bodyText1
-                                                      .override(
-                                                    fontFamily: 'Poppins',
-                                                    color: FlutterFlowTheme
-                                                        .tertiaryColor,
-                                                  ),
-                                                  enabledBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(4.0),
-                                                      topRight:
-                                                          Radius.circular(4.0),
-                                                    ),
-                                                  ),
-                                                  focusedBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(4.0),
-                                                      topRight:
-                                                          Radius.circular(4.0),
-                                                    ),
-                                                  ),
-                                                ),
-                                                style: FlutterFlowTheme
-                                                    .bodyText1
-                                                    .override(
-                                                  fontFamily: 'Poppins',
-                                                  color: FlutterFlowTheme
-                                                      .tertiaryColor,
-                                                ),
-                                                keyboardType:
-                                                    TextInputType.number,
+                                            child: Text(
+                                              listViewPartnersRecord.units
+                                                  .toString(),
+                                              textAlign: TextAlign.end,
+                                              style: FlutterFlowTheme.bodyText1
+                                                  .override(
+                                                fontFamily: 'Poppins',
+                                                color: FlutterFlowTheme
+                                                    .tertiaryColor,
                                               ),
                                             ),
                                           ),
@@ -334,50 +305,15 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                               decoration: BoxDecoration(
                                                 color: Color(0xFFEEEEEE),
                                               ),
-                                              child: TextFormField(
-                                                controller:
-                                                    partnerTextFieldController,
-                                                obscureText: false,
-                                                decoration: InputDecoration(
-                                                  hintText: 'Nom',
-                                                  hintStyle: FlutterFlowTheme
+                                              child: Align(
+                                                alignment: Alignment(-1, 0),
+                                                child: Text(
+                                                  listViewPartnersRecord.name,
+                                                  style: FlutterFlowTheme
                                                       .bodyText1
                                                       .override(
                                                     fontFamily: 'Poppins',
                                                   ),
-                                                  enabledBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(4.0),
-                                                      topRight:
-                                                          Radius.circular(4.0),
-                                                    ),
-                                                  ),
-                                                  focusedBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide: BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 1,
-                                                    ),
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(4.0),
-                                                      topRight:
-                                                          Radius.circular(4.0),
-                                                    ),
-                                                  ),
-                                                ),
-                                                style: FlutterFlowTheme
-                                                    .bodyText1
-                                                    .override(
-                                                  fontFamily: 'Poppins',
                                                 ),
                                               ),
                                             ),
@@ -439,20 +375,20 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                       )
                                     ],
                                   ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                )
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -50,9 +50,17 @@ dependencies:
 dev_dependencies:
   build_runner: ^1.11.5
   built_value_generator: ^8.0.4
+  flutter_launcher_icons: ^0.8.1
 
   flutter_test:
     sdk: flutter
+
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'assets/images/appstore1024.png'
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
