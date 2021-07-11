@@ -35,12 +35,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   String get unit;
 
   @nullable
-  @BuiltValueField(wireName: 'partners_name')
-  BuiltList<String> get partnersName;
-
-  @nullable
-  @BuiltValueField(wireName: 'partners_unit')
-  BuiltList<double> get partnersUnit;
+  @BuiltValueField(wireName: 'tips_to_share')
+  double get tipsToShare;
 
   @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
@@ -53,8 +49,7 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..uid = ''
     ..phoneNumber = ''
     ..unit = ''
-    ..partnersName = ListBuilder()
-    ..partnersUnit = ListBuilder();
+    ..tipsToShare = 0.0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -81,6 +76,7 @@ Map<String, dynamic> createUsersRecordData({
   DateTime createdTime,
   String phoneNumber,
   String unit,
+  double tipsToShare,
 }) =>
     serializers.toFirestore(
         UsersRecord.serializer,
@@ -92,5 +88,4 @@ Map<String, dynamic> createUsersRecordData({
           ..createdTime = createdTime
           ..phoneNumber = phoneNumber
           ..unit = unit
-          ..partnersName = null
-          ..partnersUnit = null));
+          ..tipsToShare = tipsToShare));

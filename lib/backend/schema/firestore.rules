@@ -9,5 +9,11 @@ service cloud.firestore {
       allow read: if true;
       allow create, update: if request.auth.uid == userId;
     }
+
+    // WARNING! ONLY FOR TEST MODE: Make sure you properly configure the
+    // security rules for this collection before publishing your app.
+    match /partners/{id} {
+      allow read, write: if true;
+    }
   }
 }
