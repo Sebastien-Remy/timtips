@@ -153,12 +153,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                           alignment: Alignment(0, 0),
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                                            child: Text(
-                                              '${NumberFormat.currency(locale: 'fr_FR', symbol: "€").format(totalTips)}',
-                                              style: FlutterFlowTheme.title1.override(
-                                                fontFamily: 'Poppins',
-                                              ),
-                                            ),
+                                            child: Text('${NumberFormat.currency(locale: 'fr_FR', symbol: "€").format(totalTips)}', style: FlutterFlowTheme.title1.override(fontFamily: 'Poppins', ),),
                                           ),
                                         ),
                                       ),
@@ -176,10 +171,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                           ),
                                           child: Align(
                                             alignment: Alignment(0, 0),
-                                            child: Text(
-                                              'A partager en ${mainPageUsersRecord.unit}',
-                                              style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: FlutterFlowTheme.tertiaryColor,),
-                                            ),
+                                            child: Text('A partager', style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: FlutterFlowTheme.tertiaryColor,),),
                                           ),
                                         ),
                                       )

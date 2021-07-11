@@ -128,8 +128,7 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                           padding: EdgeInsets.fromLTRB(8, 0, 8, 21),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              await updatePartnerPartnersRecord.reference
-                                  .delete();
+                              await updatePartnerPartnersRecord.reference.delete();
                               Navigator.pop(context);
                             },
                             text: 'Supprimer',
@@ -137,14 +136,8 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                               width: double.infinity,
                               height: 40,
                               color: Color(0xFFF92525),
-                              textStyle: FlutterFlowTheme.subtitle2.override(
-                                fontFamily: 'Poppins',
-                                color: Colors.white,
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
+                              textStyle: FlutterFlowTheme.subtitle2.override(fontFamily: 'Poppins', color: Colors.white,),
+                              borderSide: BorderSide(color: Colors.transparent, width: 1,),
                               borderRadius: 12,
                             ),
                           ),
