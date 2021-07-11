@@ -123,9 +123,8 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                             keyboardType: TextInputType.number,
                           ),
                         ),
-                        Spacer(),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(8, 0, 8, 21),
+                          padding: EdgeInsets.fromLTRB(8, 16, 8, 16),
                           child: FFButtonWidget(
                             onPressed: () async {
                               await updatePartnerPartnersRecord.reference.delete();

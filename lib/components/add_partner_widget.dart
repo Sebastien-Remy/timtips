@@ -166,9 +166,8 @@ class _AddPartnerWidgetState extends State<AddPartnerWidget> {
                             )
                           ],
                         ),
-                        Spacer(),
                         Padding(
-                          padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                          padding: EdgeInsets.fromLTRB(8, 16, 8, 8),
                           child: FFButtonWidget(
                             onPressed: () async {
                               Navigator.pop(context);

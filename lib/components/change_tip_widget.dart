@@ -98,7 +98,6 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
                           ),
                         ),
 
-                        Spacer(),
 
                         // Cancel Button
                         // -------------
