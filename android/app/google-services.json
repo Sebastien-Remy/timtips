@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "124970096100",
+    "project_id": "timtips-af7f3",
+    "storage_bucket": "timtips-af7f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124970096100:android:80f21d0da152a984a823f1",
+        "android_client_info": {
+          "package_name": "fr.monkeydev.timtips"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124970096100-iukgasg6q96lmeobc7qr9b0sbanlp9nu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3p6pn1aSzy_dpTwwF8fh_9BSo3kz5y_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124970096100-iukgasg6q96lmeobc7qr9b0sbanlp9nu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "124970096100-7d8l119mtu13sbraipdr8h81cbbui71f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fr.monkeydev.timtips"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
