@@ -252,15 +252,12 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                             alignment: Alignment(0, 0),
                                             child: Column(
                                               mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
-                                                Text(
-                                                  listViewPartnersRecord.units.toString(),
-                                                  textAlign: TextAlign.end, style: FlutterFlowTheme.title3.override(fontFamily: 'Poppins', color: FlutterFlowTheme.tertiaryColor, fontWeight: FontWeight.w600),
-                                                ),
-                                                Text(
-                                                    '${mainPageUsersRecord.unit}',
-                                                  style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: Colors.black, fontSize: 10,),
+                                                Text(listViewPartnersRecord.units.toString(), textAlign: TextAlign.end, style: FlutterFlowTheme.title3.override(fontFamily: 'Poppins', color: FlutterFlowTheme.tertiaryColor, fontWeight: FontWeight.w600),),
+                                                Offstage(
+                                                    offstage: mainPageUsersRecord.unit.isEmpty,
+                                                    child:Text('${mainPageUsersRecord.unit}', style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: Colors.black, fontSize: 10,),)
                                                 ),
                                               ],
                                             ),
