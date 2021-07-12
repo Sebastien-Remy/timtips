@@ -62,6 +62,8 @@ dev_dependencies:
     sdk: flutter
 
 
+# on terminal run
+# flutter pub run flutter_launcher_icons:main
 flutter_icons:
   android: true
   ios: false
