@@ -146,9 +146,9 @@ class _UserPageWidgetState extends State<UserPageWidget> {
                       options: FFButtonOptions(
                         width: 130,
                         height: 40,
-                        color: Color(0xFFAA1216),
-                        textStyle: FlutterFlowTheme.subtitle2.override(fontFamily: 'Poppins', color: Colors.white,),
-                        borderSide: BorderSide(color: Colors.transparent, width: 1,),
+                        color: Colors.white,
+                        textStyle: FlutterFlowTheme.subtitle2.override(fontFamily: 'Poppins', color: Colors.red,),
+                        borderSide: BorderSide(color:Colors.white, width: 1,),
                         borderRadius: 12,
                       ),
                     ),
