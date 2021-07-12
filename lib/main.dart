@@ -1,4 +1,6 @@
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -32,8 +34,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  // Login
   Stream<TimtipsFirebaseUser> userStream;
   TimtipsFirebaseUser initialUser;
+
+  // Firebase Analytics
+  FirebaseAnalytics analytics = FirebaseAnalytics();
 
   @override
   void initState() {
@@ -60,6 +67,9 @@ class _MyAppState extends State<MyApp> {
           : currentUser.loggedIn
               ? MainPageWidget()
               : LoginPageWidget(),
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: analytics),
+      ],
     );
   }
 }
