@@ -33,9 +33,7 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
 
         final changeTipUsersRecord = snapshot.data;
 
-        return Padding(
-          padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
-          child: Column(
+        return Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
@@ -56,14 +54,14 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
                         // Title
                         // ------
                         Padding(
-                          padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                          padding: EdgeInsets.fromLTRB(0, 32, 0, 16),
                           child: Text( 'Pourboires à partager', style: FlutterFlowTheme.title1.override(fontFamily: 'Poppins', fontWeight: FontWeight.w500,),),
                         ),
 
                         // Tips to share
                         // ---------------
                         Padding(
-                          padding: EdgeInsets.fromLTRB(4, 4, 4, 4),
+                          padding: EdgeInsets.all(8),
                           child: TextFormField(
                             controller: TextEditingController.fromValue(
                               TextEditingValue(
@@ -73,10 +71,10 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
                             ),
                             obscureText: false,
                             decoration: InputDecoration(
-                              labelText: 'Total à partager :',
+                              labelText: 'Total à partager :\n',
                               labelStyle: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins',),
                               hintText: '[Entrez le montant total…]',
-                              hintStyle: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins'),
+                              hintStyle: FlutterFlowTheme.bodyText2.override(fontFamily: 'Poppins'),
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: Color(0x00000000), width: 1,),
                                 borderRadius: const BorderRadius.only(topLeft: Radius.circular(4.0), topRight: Radius.circular(4.0),
@@ -89,7 +87,7 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
                               filled: true,
                               fillColor: FlutterFlowTheme.tertiaryColor,
                             ),
-                            style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins',),
+                            style: FlutterFlowTheme.subtitle1.override(fontFamily: 'Poppins',),
                             maxLines: 1,
                             keyboardType: TextInputType.number,
                             onChanged: (value) => tipsToShareTextFieldValue = value,
@@ -145,7 +143,6 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
                 ),
               )
             ],
-          ),
         );
       },
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 
 import '../auth/auth_util.dart';
@@ -154,7 +155,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                           alignment: Alignment(0, 0),
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                                            child: Text('${NumberFormat.currency(locale: 'fr_FR', symbol: "€").format(totalTips)}', style: FlutterFlowTheme.title1.override(fontFamily: 'Poppins', ),),
+                                            child: Text('${NumberFormat.currency(locale: 'fr_FR', symbol: "€").format(totalTips)}', style: FlutterFlowTheme.title1.override(fontFamily: 'Poppins', fontWeight: FontWeight.bold),),
                                           ),
                                         ),
                                       ),
@@ -172,7 +173,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                           ),
                                           child: Align(
                                             alignment: Alignment(0, 0),
-                                            child: Text('A partager', style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: FlutterFlowTheme.tertiaryColor,),),
+                                            child: Text('A partager', style: FlutterFlowTheme.title3)
                                           ),
                                         ),
                                       )
@@ -227,6 +228,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                 // -----------------------
                                 child: InkWell(
                                   onTap: () async {
+
                                     await showModalBottomSheet(
                                       isScrollControlled: true,
                                       backgroundColor: FlutterFlowTheme.primaryColor,
@@ -259,8 +261,8 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                                 Offstage(
                                                     offstage: mainPageUsersRecord.unit.isEmpty,
                                                     child: Text('${mainPageUsersRecord.unit}',
-                                                        style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: Colors.black, fontSize: 10,),
-                                                        maxLines: 2,
+                                                      style: FlutterFlowTheme.bodyText2,
+                                                      maxLines: 2,
                                                         textAlign: TextAlign.center,
                                                       ),
                                                     )
@@ -269,7 +271,6 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                             ),
                                           ),
                                         ),
-
 
                                       // Partner Name
                                       Expanded(
@@ -283,7 +284,7 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                               decoration: BoxDecoration(color: Color(0xFFEEEEEE)),
                                               child: Align(
                                                 alignment: Alignment(-1, 0),
-                                                child: Text(listViewPartnersRecord.name, style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins',),),
+                                                child: Text(listViewPartnersRecord.name, style: FlutterFlowTheme.title3.override(fontFamily: 'Poppins',),),
                                               ),
                                             ),
                                           ),
@@ -318,11 +319,9 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                                                 Align(
                                                   alignment: Alignment(0, 0),
                                                   child: AutoSizeText(
-
                                                     '(${NumberFormat.decimalPercentPattern(locale: 'fr_FR', decimalDigits: 2).format(tipsPercentage)})',
-                                                    style: FlutterFlowTheme.bodyText1.override(fontFamily: 'Poppins', color: Color(0xFF787878), fontSize: 10,),
+                                                    style: FlutterFlowTheme.bodyText2),
                                                   ),
-                                                )
                                               ],
                                             ),
                                           ),
