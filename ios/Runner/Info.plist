@@ -37,10 +37,10 @@
 	<string>ca-app-pub-2799698082207881~6679007429</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your location is required for statistics</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location is required for statistics</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+        <string>Your location is not needed. This request has popped up due to a 3rd party framework used by the app in a context that does NOT need you to reveal you location. Do be sure to check audit trail for the location queries on ios 15 or later.</string>
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>You will get zero benefit allowing this app accessing your location. You should never see this alert. If you do alert technical support at sebastien.remy@monkeydev.fr</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>This identifier will be used to deliver personalized ads to you.</string>
 	<key>SKAdNetworkItems</key>
