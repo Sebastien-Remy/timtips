@@ -37,6 +37,10 @@
 	<string>ca-app-pub-2799698082207881~6679007429</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location is required for statistics</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is required for statistics</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>This identifier will be used to deliver personalized ads to you.</string>
 	<key>SKAdNetworkItems</key>
@@ -63,9 +67,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-    <key>NSLocationAlwaysUsageDescription</key>
-     <string>Your location is required for statistics</string>
-     <key>NSLocationWhenInUseUsageDescription</key>
-     <string>Your location is required for statistics</string>
 </dict>
 </plist>
