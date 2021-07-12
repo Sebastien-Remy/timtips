@@ -32,6 +32,7 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
         }
 
         final changeTipUsersRecord = snapshot.data;
+        tipsToShareTextFieldValue = changeTipUsersRecord.tipsToShare.toString();
 
         return Column(
             mainAxisSize: MainAxisSize.max,
@@ -65,7 +66,7 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
                           child: TextFormField(
                             controller: TextEditingController.fromValue(
                               TextEditingValue(
-                                text: changeTipUsersRecord.tipsToShare.toString(),
+                                text: tipsToShareTextFieldValue,
                                 selection: TextSelection.collapsed(offset:changeTipUsersRecord.tipsToShare.toString().length,),
                               ),
                             ),

@@ -102,12 +102,13 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                                 return Center(child: CircularProgressIndicator());
                               }
                               final userRecord = snapshot.data;
+                              unitTextFieldValue = partnerRecord.units.toString();
 
                               return TextFormField(
                                 controller: TextEditingController.fromValue(
                                   TextEditingValue(
                                     text: partnerRecord.units.toString(),
-                                    selection: TextSelection.collapsed(offset:partnerRecord.units.toString().length,),
+                                    selection: TextSelection.collapsed(offset:unitTextFieldValue.length,),
                                   ),
                                 ),
                                 obscureText: false,
@@ -127,6 +128,7 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                                 style: FlutterFlowTheme.subtitle1.override(fontFamily: 'Poppins',),
                                 maxLines: 1,
                                 keyboardType: TextInputType.number,
+                                onChanged: (value) => unitTextFieldValue = value,
                               );
                             }
                         ),
