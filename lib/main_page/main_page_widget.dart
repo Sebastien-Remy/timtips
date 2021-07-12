@@ -1,6 +1,9 @@
 import 'package:flutter/rendering.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
+import '../ad_state.dart';
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/add_partner_widget.dart';
@@ -20,9 +23,30 @@ class MainPageWidget extends StatefulWidget {
 }
 
 class _MainPageWidgetState extends State<MainPageWidget> {
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var totalUnits = 0.0;
   var totalTips = 0.0;
+
+  // Ads
+  static const REMOVE_AD = false;
+  BannerAd banner;
+  InterstitialAd interstitialAd;
+  @override didChangeDependencies() {
+    super.didChangeDependencies();
+    final adState = Provider.of<AdState>(context);
+    adState.initialization.then((status) {
+      setState(() {
+        banner = BannerAd(
+            adUnitId: adState.bannerAdUnit,
+            size: AdSize.banner,
+            request: AdRequest(),
+            listener: adState.bannerAdListener
+        )
+          ..load();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +131,22 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
 
+                    // Ad Banner
+                    if (banner == null || REMOVE_AD)
+                      SizedBox(height: 66)
+                    else
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+                        child: Container(
+                          height: banner.size.height.toDouble(),
+                          width: banner.size.width.toDouble(),
+                          child: AdWidget(
+                              ad: banner
+                          ),
+                        ),
+                      ),
+
+
                     // Header
                     // ---------
                     StreamBuilder<UsersRecord>(
@@ -185,7 +225,6 @@ class _MainPageWidgetState extends State<MainPageWidget> {
                           );
                         }
                     ),
-
 
                     // Partners
                     // ------------
