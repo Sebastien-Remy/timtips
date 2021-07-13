@@ -5,15 +5,14 @@ class AdState {
 
   // Tests Ad Id
   // https://developers.google.com/admob/android/test-ads
+  /*
   static const String BANNER_AD_ANDROID = "ca-app-pub-3940256099942544/6300978111"; // TEST
   static const String BANNER_AD_IOS = "ca-app-pub-3940256099942544/6300978111"; // TEST
+ */
 
-
-  /*
   // Production Ad Id
   static const String BANNER_AD_ANDROID = "ca-app-pub-2799698082207881/5338005596";
   static const String BANNER_AD_IOS = "ca-app-pub-2799698082207881/6487435738";
- */
 
   Future<InitializationStatus> initialization;
 
