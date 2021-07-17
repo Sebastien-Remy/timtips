@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 import 'ad_state.dart';
 import 'auth/firebase_user_provider.dart';
 import 'package:timtips/login_page/login_page_widget.dart';
@@ -42,9 +43,28 @@ class _MyAppState extends State<MyApp> {
   // Firebase Analytics
   FirebaseAnalytics analytics = FirebaseAnalytics();
 
+  // Rate App
+  RateMyApp rateMyApp = RateMyApp(
+    preferencesPrefix: 'rateMyApp_',
+    minDays: 5, // Show rate popup on first day of install.
+    minLaunches: 7, // Show rate popup after 5 launches of app after minDays is passed.
+    remindLaunches: 10,
+    remindDays: 7,
+  );
+
   @override
   void initState() {
     super.initState();
+
+    // Rate
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      await rateMyApp.init();
+      if (mounted && rateMyApp.shouldOpenDialog) {
+        rateMyApp.showRateDialog(context);
+      }
+    });
+
+    // User listening
     userStream = timtipsFirebaseUserStream()
       ..listen((user) => initialUser ?? setState(() => initialUser = user));
   }
