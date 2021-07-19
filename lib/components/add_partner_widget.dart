@@ -105,7 +105,7 @@ class _AddPartnerWidgetState extends State<AddPartnerWidget> {
                             fillColor: FlutterFlowTheme.tertiaryColor,),
                           style: FlutterFlowTheme.subtitle1.override(fontFamily: 'Poppins',),
                           maxLines: 1,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.numberWithOptions(decimal: true, signed: false),
                         ),
                       ),
 
@@ -140,7 +140,7 @@ class _AddPartnerWidgetState extends State<AddPartnerWidget> {
                             final partnersCreateData = createPartnersRecordData(
                               ownerId: currentUserReference,
                               name: nameTextFieldController.text,
-                              units: double.tryParse(unitTextFieldController.text) ?? 0,
+                              units: double.tryParse(unitTextFieldController.text.replaceAll(",", ".")) ?? 0,
                             );
                             await PartnersRecord.collection.doc().set(partnersCreateData);
                             Navigator.pop(context);

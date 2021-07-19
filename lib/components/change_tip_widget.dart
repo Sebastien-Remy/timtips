@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -32,7 +34,7 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
         }
 
         final changeTipUsersRecord = snapshot.data;
-        tipsToShareTextFieldValue = changeTipUsersRecord.tipsToShare.toString();
+        tipsToShareTextFieldValue = NumberFormat.decimalPattern('fr_FR').format(changeTipUsersRecord.tipsToShare);
 
         return Column(
             mainAxisSize: MainAxisSize.max,
@@ -90,7 +92,7 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
                             ),
                             style: FlutterFlowTheme.subtitle1.override(fontFamily: 'Poppins',),
                             maxLines: 1,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.numberWithOptions(decimal: true, signed: false),
                             onChanged: (value) => tipsToShareTextFieldValue = value,
                           ),
                         ),
@@ -121,7 +123,7 @@ class _ChangeTipWidgetState extends State<ChangeTipWidget> {
                           child: FFButtonWidget(
                             onPressed: () async {
                               final usersUpdateData = createUsersRecordData(
-                                tipsToShare: double.tryParse(tipsToShareTextFieldValue) ?? 0,
+                                tipsToShare: double.tryParse(tipsToShareTextFieldValue.replaceAll(",", ".")) ?? 0,
                               );
                               await changeTipUsersRecord.reference.update(usersUpdateData);
                               Navigator.pop(context);

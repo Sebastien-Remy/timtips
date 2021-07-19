@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -107,7 +109,7 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                               return TextFormField(
                                 controller: TextEditingController.fromValue(
                                   TextEditingValue(
-                                    text: partnerRecord.units.toString(),
+                                    text: unitTextFieldValue,
                                     selection: TextSelection.collapsed(offset:unitTextFieldValue.length,),
                                   ),
                                 ),
@@ -127,7 +129,7 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                                   fillColor: FlutterFlowTheme.tertiaryColor,),
                                 style: FlutterFlowTheme.subtitle1.override(fontFamily: 'Poppins',),
                                 maxLines: 1,
-                                keyboardType: TextInputType.number,
+                                keyboardType: TextInputType.numberWithOptions(decimal: true, signed: false),
                                 onChanged: (value) => unitTextFieldValue = value,
                               );
                             }
@@ -184,7 +186,7 @@ class _UpdatePartnerWidgetState extends State<UpdatePartnerWidget> {
                             final partnersUpdateData = createPartnersRecordData(
                               ownerId: currentUserReference,
                               name: nameTextFieldValue,
-                              units: double.tryParse(unitTextFieldValue) ?? 0,
+                              units: double.tryParse(unitTextFieldValue.replaceAll(",", ".")) ?? 0,
                             );
                             await partnerRecord.reference.update(partnersUpdateData);
                             Navigator.pop(context);
